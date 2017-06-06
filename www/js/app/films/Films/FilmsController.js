@@ -1,6 +1,6 @@
 angular.module('FilmsModule')
 
-.controller('FilmsController', function($scope, Film, FilmService, $stateParams) {
+.controller('FilmsController', function($scope, Film, FilmService) {
 
     var initView = function (){
         FilmService.getFilms();

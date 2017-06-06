@@ -1,6 +1,28 @@
-<ion-view view-title="Film detail">
-    <ion-content>
-        <h1>Details of {{film.Title}}</h1>
-        <img src="{{film.Poster}}" alt="">
-    </ion-content>
+<ion-view view-title="Film detail" id="filmDetails">
+    <ion-slides options="data.sliderOptions" slider="data.sliderDelegate">
+        <ion-slide-page ng-repeat="film in data.films">
+            <ion-content>
+                <div class="card">
+                    <ion-item>
+                        <div class="infoLeft">
+                            <h2>{{film.Title}}</h2>
+                            <p>{{film.Director}}</p>
+                            <p>{{film.Actors}}</p>
+                        </div>
+                        <div class="infoRight">
+                            <p>{{film.Year}}</p>
+                            <p>{{film.Runtime}}</p>
+                            <p>Rating: {{film.imdbRating}}</p>
+                        </div>
+                    </ion-item>
+                    <ion-item class="item-image">
+                        <img src="{{film.Poster}}" alt="">
+                    </ion-item>
+                    <ion-item class="item-body">
+                        <p class="info-plot">{{film.Plot}}</p>
+                    </ion-item>
+                </div>
+            </ion-content>
+        </ion-slide-page>
+    </ion-slides>
 </ion-view>

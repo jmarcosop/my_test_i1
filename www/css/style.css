@@ -1,1 +1,46 @@
 /* Empty. Add your own CSS if you like */
+
+.rating {
+    position: absolute;
+    bottom: 5px;
+}
+
+.info {
+    height: 65px;
+    overflow: hidden;
+}
+
+#films h2, #films p {
+    white-space: normal;
+}
+
+.infoLeft {
+    width: calc(100% - 100px);
+}
+
+#filmDetails .infoLeft p, #filmDetails .infoLeft h2 {
+    white-space: normal;
+}
+
+#filmDetails .infoLeft p:nth-of-type(1) {
+    font-style: italic;
+    margin-bottom: 6px;
+}
+
+#filmDetails .infoRight p:first-of-type {
+    font-size: 16px;
+    color: black;
+    font-style: normal;
+    margin-bottom: 25px;
+}
+
+.infoRight {
+    position:absolute;
+    top: 0;
+    right: 0;
+    padding-right: 16px;
+    padding-top: 16px;
+    text-align: right;
+    width:100px;
+    font-style: italic;
+}

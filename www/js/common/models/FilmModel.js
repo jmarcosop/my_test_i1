@@ -14,9 +14,19 @@ angular.module('FilmModel', [])
     }
 
     Film.build = function (data) {
-        if(!data)
+        if(!data || (!data.Title && !data.title))
             return null;
-        return new Film(data.Title, data.Year, data.Runtime, data.Director, data.Actors, data.Plot, data.Poster, data.imdbRating);
+        if ('Title' in data){
+            var lowerCaseStartingData = {};
+            var key, keys = Object.keys(data);
+
+            for(var i=0; i< keys.length; i++){
+                key = keys[i].charAt(0).toLowerCase() + keys[i].slice(1);
+                lowerCaseStartingData[key] = data[keys[i]];
+            }
+            data = lowerCaseStartingData;
+        }
+        return new Film(data.title, data.year, data.runtime, data.director, data.actors, data.plot, data.poster, data.imdbRating);
     }
 
     Film.prototype.toJson = function() {

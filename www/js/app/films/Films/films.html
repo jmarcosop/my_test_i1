@@ -2,7 +2,7 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-thumbnail-left" ui-sref="app.films-detail({filmTitle:'{{film.title}}'})" ng-repeat="film in films">
-                <img style="background-image:url({{film.poster}});background-size:cover;">
+                <img safe-bg-src="{{film.poster}}">
                 <div class="info">
                     <h2>{{film.title}}</h2>
                     <p>{{film.director}} - {{film.year}}</p>

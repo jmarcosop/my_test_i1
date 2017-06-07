@@ -5,21 +5,21 @@
                 <div class="card">
                     <ion-item>
                         <div class="infoLeft">
-                            <h2>{{film.Title}}</h2>
-                            <p>{{film.Director}}</p>
-                            <p>{{film.Actors}}</p>
+                            <h2>{{film.title}}</h2>
+                            <p>{{film.director}}</p>
+                            <p>{{film.actors}}</p>
                         </div>
                         <div class="infoRight">
-                            <p>{{film.Year}}</p>
-                            <p>{{film.Runtime}}</p>
+                            <p>{{film.year}}</p>
+                            <p>{{film.runtime}}</p>
                             <p>Rating: {{film.imdbRating}}</p>
                         </div>
                     </ion-item>
                     <ion-item class="item-image">
-                        <img src="{{film.Poster}}" alt="">
+                        <img safe-src="{{film.poster}}" alt="">
                     </ion-item>
                     <ion-item class="item-body">
-                        <p class="info-plot">{{film.Plot}}</p>
+                        <p class="info-plot">{{film.plot}}</p>
                     </ion-item>
                 </div>
             </ion-content>

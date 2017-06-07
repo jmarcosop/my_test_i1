@@ -7,11 +7,16 @@ angular.module('FilmsModule')
 
     var initView = function () {
         $scope.data.currentPage = FilmService.getFilmPosition($stateParams.filmTitle);
-        console.log(FilmService.getFilmPosition($stateParams.filmTitle));
     };
 
     var setupSlider = function() {
-        $scope.sliderOptions = {};
+        $scope.data.sliderOptions = {
+            initialSlide: FilmService.getFilmPosition($stateParams.filmTitle),
+            direction: 'horizontal',
+            speed: 300,
+            grabCursor: true
+        };
+
         $scope.sliderDelegate = null;
 
         $scope.$watch('data.sliderDelegate', function(newVal, oldVal){
@@ -26,4 +31,6 @@ angular.module('FilmsModule')
     $scope.$on('$ionicView.loaded', function(){
         initView();
     });
+
+    setupSlider();
 })

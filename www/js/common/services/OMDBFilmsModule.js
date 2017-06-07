@@ -1,4 +1,4 @@
-angular.module('OMDBFilmsModule', ['FilmModel'])
+angular.module('OMDBFilmsModule', ['FilmModel', 'StorageModule'])
 .constant('filmNames', [
     'Martian',
     'Interstellar',
@@ -22,7 +22,7 @@ angular.module('OMDBFilmsModule', ['FilmModel'])
     {"Title":"Independence Day: Resurgence","Year":"2016","Rated":"PG-13","Released":"24 Jun 2016","Runtime":"120 min","Genre":"Action, Adventure, Sci-Fi","Director":"Roland Emmerich","Writer":"Nicolas Wright (screenplay), James A. Woods (screenplay), Dean Devlin (screenplay), Roland Emmerich (screenplay), James Vanderbilt (screenplay), Dean Devlin (story by), Roland Emmerich (story by), Nicolas Wright (story by), James A. Woods (story by), Dean Devlin (based on characters created by), Roland Emmerich (based on characters created by)","Actors":"Liam Hemsworth, Jeff Goldblum, Jessie T. Usher, Bill Pullman","Plot":"Two decades after the first Independence Day invasion, Earth is faced with a new extra-Solar threat. But will mankind's new space defenses be enough?","Language":"English, Mandarin","Country":"USA","Awards":"1 win & 15 nominations.","Poster":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyMTg5MTg4OV5BMl5BanBnXkFtZTgwMzkzMjY5NzE@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.3/10"},{"Source":"Rotten Tomatoes","Value":"31%"},{"Source":"Metacritic","Value":"32/100"}],"Metascore":"32","imdbRating":"5.3","imdbVotes":"126,209","imdbID":"tt1628841","Type":"movie","DVD":"18 Oct 2016","BoxOffice":"$103,137,295","Production":"20th Century Fox","Website":"http://www.foxmovies.com/movies/independence-day-resurgence","Response":"True"},
     {"Title":"Star Trek Beyond","Year":"2016","Rated":"PG-13","Released":"22 Jul 2016","Runtime":"122 min","Genre":"Action, Adventure, Sci-Fi","Director":"Justin Lin","Writer":"Simon Pegg, Doug Jung, Gene Roddenberry (based upon \"Star Trek\" created by)","Actors":"Chris Pine, Zachary Quinto, Karl Urban, Zoe Saldana","Plot":"The USS Enterprise crew explores the furthest reaches of uncharted space, where they encounter a new ruthless enemy who puts them and everything the Federation stands for to the test.","Language":"English","Country":"USA, Hong Kong, China","Awards":"Nominated for 1 Oscar. Another 1 win & 23 nominations.","Poster":"https://images-na.ssl-images-amazon.com/images/M/MV5BZDRiOGE5ZTctOWIxOS00MWQwLThlMDYtNWIwMDQwNzBjZDY1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.1/10"},{"Source":"Rotten Tomatoes","Value":"84%"},{"Source":"Metacritic","Value":"68/100"}],"Metascore":"68","imdbRating":"7.1","imdbVotes":"163,086","imdbID":"tt2660888","Type":"movie","DVD":"01 Nov 2016","BoxOffice":"$158,804,470","Production":"Paramount Pictures","Website":"http://www.startrekmovie.com/","Response":"True"},
     {"Title":"The Space Between Us","Year":"2017","Rated":"PG-13","Released":"03 Feb 2017","Runtime":"120 min","Genre":"Adventure, Drama, Romance","Director":"Peter Chelsom","Writer":"Allan Loeb (screenplay), Stewart Schill (story by), Richard Barton Lewis (story by), Allan Loeb (story by)","Actors":"Gary Oldman, Janet Montgomery, Trey Tucker, Scott Takeda","Plot":"The first human born on Mars travels to Earth for the first time, experiencing the wonders of the planet through fresh eyes. He embarks on an adventure with a street smart girl to discover how he came to be.","Language":"English","Country":"USA","Awards":"1 nomination.","Poster":"https://images-na.ssl-images-amazon.com/images/M/MV5BNjYzODU1OTkwN15BMl5BanBnXkFtZTgwMDA3MTMwMDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"6.4/10"},{"Source":"Rotten Tomatoes","Value":"17%"},{"Source":"Metacritic","Value":"33/100"}],"Metascore":"33","imdbRating":"6.4","imdbVotes":"15,232","imdbID":"tt3922818","Type":"movie","DVD":"16 May 2017","BoxOffice":"$7,829,766","Production":"STX Entertainment","Website":"http://stxmovies.com/thespacebetweenus/","Response":"True"},
-    {"Title":"Rogue One: A Star Wars Story - World Premiere","Year":"2016","Rated":"N/A","Released":"10 Dec 2016","Runtime":"89 min","Genre":"Reality-TV","Director":"N/A","Writer":"N/A","Actors":"Anthony Carboni, Andi Gutierrez, David W. Collins, Peter Townley","Plot":"N/A","Language":"English","Country":"USA","Awards":"N/A","Poster":"https://images-na.ssl-images-amazon.com/images/M/MV5BZWMyOThiOTMtYjE3MS00ZTVlLTllY2EtOTMxN2MzM2RlMDFmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyODY0NzcxNw@@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.3/10"}],"Metascore":"N/A","imdbRating":"7.3","imdbVotes":"322","imdbID":"tt6323140","Type":"movie","DVD":"N/A","BoxOffice":"N/A","Production":"N/A","Website":"N/A","Response":"True"}
+    {"Title":"Rogue One: A Star Wars Story - World Premiere","Year":"2016","Rated":"N/A","Released":"10 Dec 2016","Runtime":"89 min","Genre":"Reality-TV","Director":"N/A","Writer":"N/A","Actors":"Anthony Carboni, Andi Gutierrez, David W. Collins, Peter Townley","Plot":"N/A","Language":"English","Country":"USA","Awards":"N/A","Poster":"N/A","Ratings":[{"Source":"Internet Movie Database","Value":"7.3/10"}],"Metascore":"N/A","imdbRating":"7.3","imdbVotes":"322","imdbID":"tt6323140","Type":"movie","DVD":"N/A","BoxOffice":"N/A","Production":"N/A","Website":"N/A","Response":"True"}
 
 
 ])
@@ -36,11 +36,16 @@ angular.module('OMDBFilmsModule', ['FilmModel'])
 })()
 )
 
-.factory('FilmService', function($http, $q, $filter, filmList, filmNames, omdbApi, Film){
+.factory('FilmService', function($http, $q, $filter, filmList, filmNames, omdbApi, Film, storageService){
     var filmsService = {};
 
     filmsService.films = [];
     filmsService.selectedFilm = null;
+
+    var storedItems = storageService.getItem("films");
+    if (storedItems) {
+        filmsService.films = Film.fromJsonBunch(storedItems);
+    }
 
     var urlFromTitle = function (title){
         var queryString = title.split(' ').join('+');
@@ -87,6 +92,7 @@ angular.module('OMDBFilmsModule', ['FilmModel'])
                 filmsService.films.push(Film.build(urlFromTitle(filmNames[i])));
             }
         }
+        storageService.setItem('films', filmsService.films);
         return filmsService.films;
     };
 
